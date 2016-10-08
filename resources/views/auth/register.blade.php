@@ -73,7 +73,7 @@
                                 <label for="captcha" class="col-md-4 control-label">Enter code</label>
 
                                 <div class="col-md-6">
-                                    <input id="captcha" type="password" class="form-control"
+                                    <input id="captcha" type="text" class="form-control"
                                            name="captcha" required>
 
                                     @if ($errors->has('captcha'))
@@ -86,7 +86,8 @@
 
                             <div class="form-group">
                                 <div class="col-md-4">
-                                    <img src="{{ \App\Modules\Captcha\CaptchaHelper::getCaptchaUrl() }}"/>
+                                    <img src="{{ \App\Modules\Captcha\CaptchaHelper::getCaptchaUrl() }}" id="captchaImage"/>
+                                    <img src="/reload.png" id="reloadButton" />
                                 </div>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary">
