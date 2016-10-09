@@ -21,5 +21,6 @@ Route::get(config('captcha.url'), function () {
 });
 Route::get(\App\Http\Controllers\VacanciesController::VACANCIES_CREATE_PATH, 'VacanciesController@showCreateVacancyForm');
 Route::post(\App\Http\Controllers\VacanciesController::VACANCIES_CREATE_PATH, 'VacanciesController@createVacancy');
+Route::get(\App\Http\Controllers\VacanciesController::VACANCIES_LIST_PATH, 'VacanciesController@listVacancies');
 
 

@@ -78,4 +78,14 @@ class VacanciesController extends Controller
     {
         return self::VACANCIES_LIST_PATH;
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function listVacancies()
+    {
+//        $vacancies = Vacancy::where('status_id', '==', VacancyStatus::APPROVED_STATUS)->take(10)->get();
+        $vacancies = Vacancy::where('status_id', '=', VacancyStatus::NEW_STATUS)->paginate(15);
+        return view('vacancies/list', ['vacancies' => $vacancies]);
+    }
 }
