@@ -31,20 +31,20 @@ class SeedUsers extends Seeder
         $employer->save();
 
         /** @var Permission $createJob */
-        $createJob = new Permission();
-        $createJob->name = 'create-job';
-        $createJob->display_name = 'Create Job Posts';
-        $createJob->description = 'create new job post';
-        $createJob->save();
-        $employer->attachPermission($createJob);
+        $createVacancy = new Permission();
+        $createVacancy->name = 'create-vacancy';
+        $createVacancy->display_name = 'Create vacancy Posts';
+        $createVacancy->description = 'create new vacancy post';
+        $createVacancy->save();
+        $employer->attachPermission($createVacancy);
 
         /** @var Permission $moderateJob */
-        $moderateJob = new Permission();
-        $moderateJob->name = 'moderate-job';
-        $moderateJob->display_name = 'Moderate Jobs';
-        $moderateJob->description = 'Moderate job posts';
-        $moderateJob->save();
-        $moderator->attachPermission($moderateJob);
+        $moderateVacancy = new Permission();
+        $moderateVacancy->name = 'moderate-vacancy';
+        $moderateVacancy->display_name = 'Moderate vacancy';
+        $moderateVacancy->description = 'Moderate vacancy posts';
+        $moderateVacancy->save();
+        $moderator->attachPermission($moderateVacancy);
 
         /** @var User $user */
         $user = User::create([

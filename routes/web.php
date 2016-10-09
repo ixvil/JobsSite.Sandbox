@@ -11,20 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
+Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 Route::get(config('captcha.url'), function () {
-
     return response(\App\Modules\Captcha\CaptchaHelper::renderCaptcha())
         ->header('Content-Type', 'image/jpeg');
-
-}
-);
-
+});
+Route::get(\App\Http\Controllers\VacanciesController::VACANCIES_CREATE_PATH, 'VacanciesController@showCreateVacancyForm');
+Route::post(\App\Http\Controllers\VacanciesController::VACANCIES_CREATE_PATH, 'VacanciesController@createVacancy');
 
 
