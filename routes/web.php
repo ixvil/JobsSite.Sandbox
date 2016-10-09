@@ -14,3 +14,17 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+Route::get(config('captcha.url'), function () {
+
+    return response(\App\Modules\Captcha\CaptchaHelper::renderCaptcha())
+        ->header('Content-Type', 'image/jpeg');
+
+}
+);
+
+
+
