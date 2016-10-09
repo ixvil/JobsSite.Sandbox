@@ -9,7 +9,7 @@
         "laravel/framework": "5.3.*",
         "gregwar/captcha": "^1.1",
         "barryvdh/laravel-ide-helper": "^2.2",
-        "zizaco/entrust": "5.2.x-dev"
+        "zizaco/entrust": "dev-laravel-5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
