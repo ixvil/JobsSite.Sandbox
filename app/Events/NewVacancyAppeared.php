@@ -14,7 +14,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class NewVacancyAppeared extends Event
 {
     use InteractsWithSockets, SerializesModels;
-    private $vacancy;
+    public $vacancy;
 
 
     /**

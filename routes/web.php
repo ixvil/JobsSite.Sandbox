@@ -23,4 +23,10 @@ Route::get(\App\Http\Controllers\VacanciesController::VACANCIES_CREATE_PATH, 'Va
 Route::post(\App\Http\Controllers\VacanciesController::VACANCIES_CREATE_PATH, 'VacanciesController@createVacancy');
 Route::get(\App\Http\Controllers\VacanciesController::VACANCIES_LIST_PATH, 'VacanciesController@listVacancies');
 
+Route::get('/vacancies/approve/{id}', 'VacanciesController@approve');
+Route::get('/vacancies/remove/{id}', 'VacanciesController@remove');
+
+
+
+
 

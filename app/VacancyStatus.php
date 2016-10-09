@@ -11,4 +11,6 @@ class VacancyStatus extends Model
     const DECLINED_STATUS = 2;
     const APPROVED_STATUS = 3;
 
+
+
 }

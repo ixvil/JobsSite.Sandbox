@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewVacancyAppeared;
 use App\Vacancy;
 use App\VacancyStatus;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -23,7 +25,7 @@ class VacanciesController extends Controller
     {
         $this->validator($request->all())->validate();
         $vacancy = $this->create($request->all());
-//        event(new NewJobAppeared($job));
+        event(new NewVacancyAppeared($vacancy));
         return redirect($this->redirectPath());
     }
 
@@ -84,8 +86,44 @@ class VacanciesController extends Controller
      */
     public function listVacancies()
     {
-//        $vacancies = Vacancy::where('status_id', '==', VacancyStatus::APPROVED_STATUS)->take(10)->get();
-        $vacancies = Vacancy::where('status_id', '=', VacancyStatus::NEW_STATUS)->paginate(15);
+        /** @var Vacancy $vacancies */
+        $vacancies = Vacancy::where('status_id', '=', VacancyStatus::APPROVED_STATUS)->paginate(15);
+
         return view('vacancies/list', ['vacancies' => $vacancies]);
     }
+
+    /**
+     * @param $id
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
+     */
+    public function approve($id)
+    {
+        if (!Auth::guest() && Auth::user()->can('moderate-vacancy')) {
+            $vacancy = Vacancy::findOrFail($id);
+            $vacancy->status_id = VacancyStatus::APPROVED_STATUS;
+            $vacancy->save();
+
+            return view('vacancies/ok', array('vacancy' => $vacancy));
+        } else {
+            return redirect("/home");
+        }
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
+    public function remove($id)
+    {
+        if (!Auth::guest() && Auth::user()->can('moderate-vacancy')) {
+            $vacancy = Vacancy::findOrFail($id);
+            $vacancy->status_id = VacancyStatus::DECLINED_STATUS;
+            $vacancy->save();
+
+            return view('vacancies/ok', array('vacancy' => $vacancy));
+        } else {
+            return redirect("/home");
+        }
+    }
+
 }
