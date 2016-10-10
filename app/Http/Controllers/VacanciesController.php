@@ -6,9 +6,9 @@ use App\Events\NewVacancyAppeared;
 use App\Vacancy;
 use App\VacancyStatus;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
 
 
 class VacanciesController extends Controller
@@ -93,16 +93,14 @@ class VacanciesController extends Controller
     }
 
     /**
-     * @param $id
-     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
+     * @param Vacancy $vacancy
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function approve($id)
+    public function approve(Vacancy $vacancy)
     {
         if (!Auth::guest() && Auth::user()->can('moderate-vacancy')) {
-            $vacancy = Vacancy::findOrFail($id);
             $vacancy->status_id = VacancyStatus::APPROVED_STATUS;
             $vacancy->save();
-
             return view('vacancies/ok', array('vacancy' => $vacancy));
         } else {
             return redirect("/home");
@@ -110,16 +108,14 @@ class VacanciesController extends Controller
     }
 
     /**
-     * @param $id
+     * @param Vacancy $vacancy
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function remove($id)
+    public function remove(Vacancy $vacancy)
     {
         if (!Auth::guest() && Auth::user()->can('moderate-vacancy')) {
-            $vacancy = Vacancy::findOrFail($id);
             $vacancy->status_id = VacancyStatus::DECLINED_STATUS;
             $vacancy->save();
-
             return view('vacancies/ok', array('vacancy' => $vacancy));
         } else {
             return redirect("/home");
